@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
-async function signup(req, res) {
+async function signup(req, res,next) {
   try {
     const { email, password } = req.body;
 
@@ -29,11 +29,11 @@ async function signup(req, res) {
     });
 
   } catch (error) {
-    res.status(500).send(error.message);
+    next(error);
   }
 }
 
-async function login(req, res) {
+async function login(req, res,next) {
   try {
     const { email, password } = req.body;
 
@@ -65,7 +65,7 @@ async function login(req, res) {
     });
 
   } catch (error) {
-    res.status(500).send(error.message);
+    next(error);
   }
 }
 
