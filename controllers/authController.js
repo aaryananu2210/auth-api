@@ -53,10 +53,13 @@ const login= asyncHandler(async(req, res,next)=> {
     }
 
     const token = jwt.sign(
-      { userId: user._id },
-      process.env.JWT_SECRET,
-      { expiresIn: "1h" }
-    );
+  {
+    userId: user._id,
+    role: user.role
+  },
+  process.env.JWT_SECRET,
+  { expiresIn: "1h" }
+);
 
     res.json({
       message: "Login successful",
