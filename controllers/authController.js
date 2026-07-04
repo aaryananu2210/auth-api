@@ -1,40 +1,39 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
+const asyncHandler = require("../utils/asyncHandler");
 
-async function signup(req, res,next) {
-  try {
+
+const signup = asyncHandler(async (req, res) => {
+
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res.status(400).send("Email and password required");
+        return res.status(400).send("Email and password required");
     }
 
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
-      return res.status(409).send("User already exists");
+        return res.status(409).send("User already exists");
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = await User.create({
-      email,
-      password: hashedPassword
+        email,
+        password: hashedPassword
     });
 
     res.json({
-      message: "User created successfully",
-      email: newUser.email
+        message: "User created successfully",
+        email: newUser.email
     });
 
-  } catch (error) {
-    next(error);
-  }
-}
+});
 
-async function login(req, res,next) {
-  try {
+
+const login= asyncHandler(async(req, res,next)=> {
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -64,10 +63,8 @@ async function login(req, res,next) {
       token
     });
 
-  } catch (error) {
-    next(error);
-  }
-}
+});
+
 
 function getProfile(req, res) {
   res.json({
