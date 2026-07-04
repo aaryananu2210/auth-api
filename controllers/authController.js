@@ -76,8 +76,19 @@ function getProfile(req, res) {
   });
 }
 
+const uploadProfile = (req, res) => {
+
+    console.log(req.file);
+
+    res.json({
+        message: "Profile uploaded successfully"
+    });
+
+};
+
 module.exports = {
   signup,
   login,
-  getProfile
+  getProfile,
+  uploadProfile
 };

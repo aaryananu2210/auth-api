@@ -1,8 +1,10 @@
 const express = require("express");
 const authMiddleware = require("../middleware/authMiddleware");
-const { signup ,login,getProfile} = require("../controllers/authController");
+const { signup ,login,getProfile,uploadProfile} = require("../controllers/authController");
 const { body } = require("express-validator");
 const validate = require("../middleware/validationMiddleware");
+const upload = require("../middleware/uploadMiddleware");
+
 
 const router = express.Router();
 
@@ -19,6 +21,12 @@ router.post(
   ],
   validate,
   signup
+);
+
+router.post(
+    "/upload",
+    upload.single("profilePic"),
+    uploadProfile
 );
 
 router.post("/login", login);
