@@ -11,7 +11,7 @@ const app = express();
 const cors = require("cors");
 
 app.use(cors({
-    origin: "https://github-dashboard-sand.vercel.app/"
+    origin: process.env.FRONTEND_URL
 }));
 
 app.use(express.json());
